@@ -1,0 +1,4 @@
+customtkinter
+reportlab
+Pillow
+google-generativeai
