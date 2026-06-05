@@ -1,3 +1,4 @@
+import os
 import customtkinter as ctk
 
 from ai_helper import generate_summary
@@ -26,6 +27,8 @@ entries = {}
 fields = [
     "Name",
     "Email",
+    "GitHub",
+    "LinkedIn",
     "Role",
     "Education",
     "Skills",
@@ -57,25 +60,32 @@ def build_resume():
     education = entries["Education"].get()
     skills = entries["Skills"].get()
     projects = entries["Projects"].get()
+    github = entries["GitHub"].get()
+    linkedin = entries["LinkedIn"].get()
 
     summary = generate_summary(
         role,
         skills
     )
 
+    os.makedirs("resumes", exist_ok=True)
     create_resume(
-        f"resumes/{name}.pdf",
+    f"resumes/{name}.pdf",
         name,
         email,
+        github,
+        linkedin,
         education,
         skills,
         projects,
         summary
-    )
+)
 
     save_resume(
         name,
         email,
+        github,
+        linkedin,
         education,
         skills,
         projects

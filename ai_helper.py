@@ -1,7 +1,7 @@
 def generate_summary(role, skills):
     return (
-        f"Motivated {role} with strong knowledge of {skills}. "
+        f"Motivated {role} with expertise in {skills}. "
         f"Passionate about software development, problem solving, "
-        f"and continuous learning. Dedicated to building efficient "
-        f"and user-friendly applications."
+        f"and creating efficient solutions. Strong learner with "
+        f"a commitment to continuous improvement and innovation."
     )

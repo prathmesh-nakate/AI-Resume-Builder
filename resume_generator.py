@@ -13,38 +13,51 @@ def create_resume(
         filename,
         name,
         email,
+        github,
+        linkedin,
         education,
         skills,
         projects,
         summary):
 
-    pdf = SimpleDocTemplate(filename)
+    pdf = SimpleDocTemplate(
+        filename,
+        rightMargin=40,
+        leftMargin=40,
+        topMargin=40,
+        bottomMargin=40
+    )
 
     styles = getSampleStyleSheet()
 
     content = []
 
     title_style = styles["Title"]
-    title_style.textColor = colors.darkblue
+    title_style.textColor = colors.HexColor("#1E3A8A")
 
     heading_style = styles["Heading2"]
-    heading_style.textColor = colors.darkblue
+    heading_style.textColor = colors.HexColor("#2563EB")
 
-    # Name
     content.append(
         Paragraph(name.upper(), title_style)
     )
 
     content.append(
-        Paragraph(email, styles["Normal"])
+        Paragraph(f"<b>Email:</b> {email}", styles["Normal"])
+    )
+
+    content.append(
+        Paragraph(f"<b>GitHub:</b> {github}", styles["Normal"])
+    )
+
+    content.append(
+        Paragraph(f"<b>LinkedIn:</b> {linkedin}", styles["Normal"])
     )
 
     content.append(Spacer(1, 15))
 
-    # Summary
     content.append(
-        Paragraph("PROFESSIONAL SUMMARY",
-                  heading_style)
+        Paragraph("PROFESSIONAL SUMMARY", heading_style)
     )
 
     content.append(HRFlowable())
@@ -53,52 +66,70 @@ def create_resume(
         Paragraph(summary, styles["Normal"])
     )
 
-    content.append(Spacer(1, 10))
+    content.append(Spacer(1, 12))
 
-    # Skills
     content.append(
-        Paragraph("SKILLS",
-                  heading_style)
+        Paragraph("SKILLS", heading_style)
     )
 
     content.append(HRFlowable())
 
-    skill_list = skills.split(",")
-
-    for skill in skill_list:
+    for skill in skills.split(","):
         content.append(
             Paragraph(f"• {skill.strip()}",
                       styles["Normal"])
         )
 
-    content.append(Spacer(1, 10))
+    content.append(Spacer(1, 12))
 
-    # Projects
     content.append(
-        Paragraph("PROJECTS",
-                  heading_style)
+        Paragraph("PROJECTS", heading_style)
+    )
+
+    content.append(HRFlowable())
+
+    for project in projects.split(","):
+        content.append(
+            Paragraph(f"• {project.strip()}",
+                      styles["Normal"])
+        )
+
+    content.append(Spacer(1, 12))
+
+    content.append(
+        Paragraph("EDUCATION", heading_style)
     )
 
     content.append(HRFlowable())
 
     content.append(
-        Paragraph(projects,
-                  styles["Normal"])
+        Paragraph(education, styles["Normal"])
     )
 
-    content.append(Spacer(1, 10))
+    content.append(Spacer(1, 12))
 
-    # Education
+    score = 0
+
+    if skills.strip():
+        score += 25
+
+    if projects.strip():
+        score += 25
+
+    if education.strip():
+        score += 25
+
+    if github.strip() and linkedin.strip():
+        score += 25
+
     content.append(
-        Paragraph("EDUCATION",
-                  heading_style)
+        Paragraph("ATS SCORE", heading_style)
     )
 
     content.append(HRFlowable())
 
     content.append(
-        Paragraph(education,
-                  styles["Normal"])
+        Paragraph(f"{score}/100", styles["Normal"])
     )
 
     pdf.build(content)
